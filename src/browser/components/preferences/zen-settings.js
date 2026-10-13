@@ -730,8 +730,19 @@ var gZenWorkspacesSettings = {
     let toggleZenCycleByAttrWarning = {
       observe() {
         const warning = document.getElementById("zenTabsCycleByAttributeWarning");
+        const allSpacesWarning = document.getElementById("zenTabsCycleAllSpacesWarning");
+        const cycleByAttribute = Services.prefs.getBoolPref(
+          "zen.tabs.ctrl-tab.ignore-essential-tabs",
+          false
+        );
+        const cycleAllSpaces = Services.prefs.getBoolPref(
+          "zen.tabs.ctrl-tab.cycle-all-spaces",
+          false
+        );
+        allSpacesWarning.hidden = !(cycleByAttribute && cycleAllSpaces);
         warning.hidden = !(
-          Services.prefs.getBoolPref("zen.tabs.ctrl-tab.ignore-essential-tabs", false) &&
+          cycleByAttribute &&
+          !cycleAllSpaces &&
           Services.prefs.getBoolPref("browser.ctrlTab.sortByRecentlyUsed", false)
         );
       },
@@ -747,6 +758,7 @@ var gZenWorkspacesSettings = {
       toggleZenCycleByAttrWarning
     );
     Services.prefs.addObserver("browser.ctrlTab.sortByRecentlyUsed", toggleZenCycleByAttrWarning);
+    Services.prefs.addObserver("zen.tabs.ctrl-tab.cycle-all-spaces", toggleZenCycleByAttrWarning);
     window.addEventListener("unload", () => {
       Services.prefs.removeObserver("zen.glance.enabled", tabsUnloaderPrefListener);
       Services.prefs.removeObserver("zen.workspaces.separate-essentials", tabsUnloaderPrefListener);
@@ -760,6 +772,10 @@ var gZenWorkspacesSettings = {
       );
       Services.prefs.removeObserver(
         "browser.ctrlTab.sortByRecentlyUsed",
+        toggleZenCycleByAttrWarning
+      );
+      Services.prefs.removeObserver(
+        "zen.tabs.ctrl-tab.cycle-all-spaces",
         toggleZenCycleByAttrWarning
       );
     });

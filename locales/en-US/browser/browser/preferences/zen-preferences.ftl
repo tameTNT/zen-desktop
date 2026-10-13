@@ -80,6 +80,9 @@ zen-tabs-cycle-by-attribute =
 zen-tabs-cycle-ignore-pending-tabs =
   .label = Ignore Pending tabs when cycling with Ctrl+Tab
 zen-tabs-cycle-by-attribute-warning = Ctrl+Tab will cycle by recently used order, as it is enabled
+zen-tabs-cycle-all-spaces =
+  .label = Ctrl+Tab cycles through recently used tabs across all spaces
+zen-tabs-cycle-all-spaces-warning = Ctrl+Tab will cycle through tabs in all spaces by recently used order, as it is enabled
 
 zen-look-and-feel-compact-toolbar-themed =
     .label = Use themed background for compact toolbar
